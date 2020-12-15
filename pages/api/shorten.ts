@@ -1,65 +1,112 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import crs from 'crypto-random-string'
+import { nanoid } from 'nanoid';
 import denv from 'dotenv';
-import mongoose from 'mongoose';
-import URLSModel from './db/urls_model'
+import * as yup from 'yup';
 
-denv.config()
+// Express Stuff
+import expressRateLimit from 'express-rate-limit';
+import expressSlowDown from 'express-slow-down';
+import Cors from 'cors';
 
-function getNewAlias():string {
-  return crs({ length: 8, type: 'url-safe' })
+// My stuff
+import URLSModel from './db/urls-model';
+import Middleware from './middlewares/middleware';
+import Connection from './db/index';
+
+// Connect
+Connection();
+
+denv.config();
+
+function getNewAlias(): string {
+  return nanoid(8);
 }
 
-mongoose.connect(`mongodb+srv://tidis:${process.env.DB_PASS}@shortendb.mnjto.mongodb.net/shorten?retryWrites=true&w=majority`, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
+const schema = yup.object().shape({
+  url: yup.string().trim().url().required(),
+});
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse): Promise<boolean> => {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'This route only accepts POST methods' })
-    return false
+    res.status(404).json({ error: 'Cannot GET on this route!' });
+    res.end();
+    return false;
   }
 
-  if (!req.body) {
-    res.status(403).json({ error: 'You must pass a body!' })
-    return false
+  // Execute some middlewares
+  await Middleware(req, res, expressSlowDown({
+    windowMs: 30 * 1000,
+    delayAfter: 1,
+    delayMs: 500,
+  }));
+
+  await Middleware(req, res, expressRateLimit({
+    windowMs: 30 * 1000,
+    max: 1,
+  }));
+
+  const { url } = req.body;
+
+  // Validate the URL
+  await schema.validate({ url });
+
+  // Ban some wacky words from here
+  const found = ['tidis.net', 'projectsa.net'].map((a) => url.includes(a));
+  if (found.length > 0 && found.includes(true)) {
+    res.status(403).json({ error: 'Cannot shorten this URL!' });
+    res.end();
+    return false;
   }
 
-  if (!req.body?.url) {
-    res.status(403).json({ error: 'You must pass a URL in that body!' })
-    return false
-  }
+  // Start register the URL
+  const body = {
+    a_url: '',
+    a_alias: '',
+  };
 
-  // Some validations
-  const body = {}
-  let alias = getNewAlias()
+  let alias = getNewAlias();
 
   try {
+    // Check if there is any alias
+    const query = URLSModel.find({}).select({ a_alias: alias });
 
-  // Check if there is any alias
-  const query = URLSModel.find({}).select({ "a_alias": alias })
+    query.exec((err, someValue) => {
+      if (err) throw new Error(err.message);
 
-  query.exec((err, someValue) => {
-    if (err) throw new Error(err.message)
+      if (someValue?.length > 0) {
+        alias = getNewAlias();
+        return true;
+      }
 
-    if (someValue?.length > 0) {
-      alias = getNewAlias()
-    } else {
-      return true
-    }
-  });
+      return false;
+    });
 
-  body["a_url"] = req.body.url
-  body["a_alias"] = alias
+    body.a_url = req.body.url;
+    body.a_alias = alias;
 
-  const URLS = new URLSModel(body);
+    const URLS = new URLSModel(body);
+
     URLS.save((err, inst) => {
-      if (err) throw new Error(err.message)
-      res.status(201).json(inst)
-    })
+      if (err) throw new Error(err.message);
+      const ret = { ...inst._doc };
+
+      delete ret._id;
+      delete ret.__v;
+      delete ret.a_createdAt;
+
+      ret.success = true;
+
+      res.status(201).json(ret);
+      res.end();
+      return true;
+    });
+
+    return true;
+
+    //
   } catch (error) {
-    res.status(500).json(error)
-    return false
+    res.status(500).json(error);
+    res.end();
+    return false;
   }
-}
+};
