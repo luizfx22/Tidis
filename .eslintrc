@@ -10,8 +10,7 @@
   },
   "plugins": [
     "@typescript-eslint",
-    "react", 
-    "@typescript-eslint",
+    "react",
     "jest"
   ],
   "extends": [
@@ -26,6 +25,8 @@
     "no-console": "off",
     "no-async-promise-executor": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/ban-types": "off"
   }
 }
