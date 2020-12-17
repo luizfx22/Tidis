@@ -41,8 +41,6 @@ app.use(expressRateLimit({
 app.post('/api/shorten', async (req, res) => {
   const { url } = await JSON.parse(req.body);
 
-  console.log(url);
-
   // Validate the URL
   const valid = await schema.validate({ url });
   if (!valid) {
@@ -68,6 +66,7 @@ app.post('/api/shorten', async (req, res) => {
       a_url: result.a_url,
       success: true,
     });
+    res.end();
     return true;
   }
 
@@ -78,7 +77,7 @@ app.post('/api/shorten', async (req, res) => {
   };
 
   try {
-    body.a_url = req.body.url;
+    body.a_url = url;
     body.a_alias = getNewAlias();
 
     const URLS = new URLSModel(body);
