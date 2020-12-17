@@ -6,6 +6,8 @@ import URLSModel from '../db/urls-model';
 
 Connection();
 
+const CACHE_CONTROL_HEADER_VALUE = 'max-age=0, s-maxage=86400, stale-while-revalidate, public';
+
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== 'GET') {
     res.status(405).end();
@@ -22,6 +24,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(404).json({ success: false, message: 'Slug not found! Babe' });
     return false;
   }
+
+  res.setHeader('Cache-Control', CACHE_CONTROL_HEADER_VALUE);
 
   res.redirect(302, result.a_url).end();
   return true;
