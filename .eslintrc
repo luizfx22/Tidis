@@ -28,6 +28,7 @@
     "no-underscore-dangle": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/ban-types": "off",
-    "@typescript-eslint/parser": "off"
+    "@typescript-eslint/parser": "off",
+    "linebreak-style": "off"
   }
 }
