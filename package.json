@@ -27,6 +27,7 @@
     "yup": "^0.32.8"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.19.0",
     "@types/cors": "^2.8.9",
     "@types/crypto-random-string": "^2.0.0",
     "@types/dotenv": "^8.2.0",
