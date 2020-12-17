@@ -39,10 +39,14 @@ app.use(expressRateLimit({
 }));
 
 app.post('/api/shorten', async (req, res) => {
-  const { url } = req.body;
+  const { url } = await JSON.parse(req.body);
 
   // Validate the URL
-  await schema.validate({ url });
+  const valid = await schema.validate({ url });
+  if (!valid) {
+    res.status(400).json({ error: 'There is no URL to shorten!' });
+    return false;
+  }
 
   // Ban some wacky words from here
   const found = ['tidis.net', 'projectsa.net'].map((a) => url.includes(a));
@@ -57,7 +61,7 @@ app.post('/api/shorten', async (req, res) => {
   }).select('a_alias a_url').exec();
 
   if (result && result?.a_alias) {
-    res.status(418).json({
+    res.status(201).json({
       a_alias: result.a_alias,
       a_url: result.a_url,
       success: true,

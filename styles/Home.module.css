@@ -61,10 +61,34 @@ input[type=submit].Shorten {
   border-radius: 8px;
   /* border: 1px solid #d3d4d7; */
   border: none;
-  color: #FFFFFF;
-  background: #0f0c29;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #24243e, #302b63, #0f0c29); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #333333;
+  /* background: #0f0c29; */
+  /* background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29); */
+  /* background: linear-gradient(to right, #24243e, #302b63, #0f0c29); */
+
+  background: #FFEFBA;
+  background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);
+  background: linear-gradient(to right, #FFFFFF, #FFEFBA);
+
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+div.response-field {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+
+  color: #ffffff;
+}
+
+div.response-field p {
+  margin-bottom: 2px;
+}
+
+div.response-field input {
+  width: 70%;
 }
 
 @media screen and (max-width: 900px) {
