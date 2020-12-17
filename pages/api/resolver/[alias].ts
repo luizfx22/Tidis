@@ -20,7 +20,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     a_alias: alias,
   }).select('a_url').exec();
 
-  if (!result) {
+  if (!result || !result?.a_url) {
     res.status(404).json({ success: false, message: 'Slug not found! Babe' });
     return false;
   }
