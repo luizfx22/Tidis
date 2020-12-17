@@ -15,10 +15,10 @@ export default function Home() {
       url: yup.string().trim().url().required(),
     });
 
-    const field = await document.getElementById('url');
+    const field: HTMLInputElement = await document.getElementById('url') as HTMLInputElement;
     const url = field.value;
 
-    const valid = await schema.validate({ url });
+    await schema.validate({ url });
 
     const headers = new Headers();
 
@@ -31,7 +31,7 @@ export default function Home() {
 
     const res = await req.json();
 
-    const resField = document.getElementById('response');
+    const resField: HTMLInputElement = document.getElementById('response') as HTMLInputElement;
 
     resField.value = `https://tidis.net/${res.a_alias}`;
   });
