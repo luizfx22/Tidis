@@ -10,7 +10,7 @@ import helmet from 'helmet';
 
 // My stuff
 import URLSModel from './db/urls-model';
-import Connection from './db/index';
+import Connection from './db/db';
 
 const app = express();
 

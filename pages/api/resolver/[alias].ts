@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 // My stuff
-import Connection from '../db/index';
+import Connection from '../db/db';
 import URLSModel from '../db/urls-model';
 
 Connection();

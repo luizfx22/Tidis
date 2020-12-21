@@ -244,7 +244,7 @@ export default class Index extends Component<{}, IState> {
                       aria-placeholder="Paste your longer URL here!"
                     />
                   </Col>
-                  <Col xs={3} md={3} xl={2}>
+                  <Col xs={3} sm={4} md={3} xl={2}>
                     <input
                       type="submit"
                       value={(loading) ? 'Loading...' : 'Shorten!'}

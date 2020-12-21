@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;1,200;1,300&display=swap');
 
 .container {
-  width: 100%;
+  width: 100vw;
   min-height: 100vh;
   padding: 0 0.5rem;
   display: flex;
@@ -92,18 +92,42 @@ div.response-field input {
 }
 
 @media screen and (max-width: 900px) {
+  h1#logo {
+    font-size: 6.5rem;
+  }
+
+  p.slogan {
+    padding-top: 38px;
+  }
+
   .form-container {
     width: 70%;
   }
 }
 
 @media screen and (max-width: 720px) {
+  h1#logo {
+    font-size: 5.5rem;
+  }
+
+  p.slogan {
+    padding-top: 38px;
+  }
+
   .form-container {
     width: 85%;
   }
 }
 
 @media screen and (max-width: 500px) {
+  h1#logo {
+    font-size: 4.5rem;
+  }
+
+  p.slogan {
+    padding-top: 38px;
+  }
+
   .form-container {
     width: 90%;
   }
