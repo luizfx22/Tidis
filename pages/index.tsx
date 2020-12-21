@@ -15,7 +15,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@mdi/font/css/materialdesignicons.css';
 
 // Types
-import IURLForm from './interfaces/form';
+interface IURLForm {
+  url: string;
+}
 
 interface IState {
   form: IURLForm,
