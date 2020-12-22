@@ -238,10 +238,10 @@ export default class Index extends Component<{}, IState> {
                       value={url}
                       onChange={this.setURL}
                       className={styles.url}
-                      placeholder="Paste your longer URL here!"
+                      placeholder="Paste your long URL here!"
                       required
                       disabled={loading}
-                      aria-placeholder="Paste your longer URL here!"
+                      aria-placeholder="Paste your long URL here!"
                     />
                   </Col>
                   <Col xs={3} sm={4} md={3} xl={2}>
