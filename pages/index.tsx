@@ -6,7 +6,7 @@ import * as yup from 'yup';
 
 // External HTML components
 import {
-  Container, Row, Col, Alert,
+  Alert,
 } from 'react-bootstrap';
 
 // Styles
@@ -199,7 +199,12 @@ export default class Index extends Component<{}, IState> {
 
   render() {
     const {
-      form: { url }, result, invalidURL, requestError, loading, created,
+      form: { url },
+      result,
+      invalidURL,
+      requestError,
+      loading,
+      created,
     } = this.state;
     return (
       <div>
@@ -226,57 +231,57 @@ export default class Index extends Component<{}, IState> {
             TIDIS
           </h1>
           <p className={styles.slogan}>An open source and privacy first url shortener.</p>
-          <div className={styles['form-container']} style={{ margin: 'auto', marginTop: '7%' }}>
+          <div className="container" style={{ marginTop: '7%' }}>
             <form onSubmit={this.handleShortening} method="post">
-              <Container fluid>
-                <Row noGutters style={{ marginBottom: '10px' }}>
-                  <Col style={{ paddingRight: '5px' }}>
-                    <input
-                      type="url"
-                      name="url"
-                      id="url"
-                      value={url}
-                      onChange={this.setURL}
-                      className={styles.url}
-                      placeholder="Paste your long URL here!"
-                      required
-                      disabled={loading}
-                      aria-placeholder="Paste your long URL here!"
-                    />
-                  </Col>
-                  <Col xs={3} sm={4} md={3} xl={2}>
-                    <input
-                      type="submit"
-                      value={(loading) ? 'Loading...' : 'Shorten!'}
-                      disabled={loading}
-                      className={styles.Shorten}
-                      aria-label="Shorten!"
-                    />
-                  </Col>
-                </Row>
-                <Alert variant="danger" show={invalidURL}>
-                  <i className="mdi mdi-close" style={{ paddingRight: '5px' }} />
-                  <span style={{ marginBottom: '2px' }}>
-                    <b>{url}</b>
-                    {' '}
-                    is not a valid URL!
-                  </span>
-                </Alert>
-                <Alert variant="danger" show={requestError}>
-                  <i className="mdi mdi-close" style={{ paddingRight: '5px' }} />
-                  <span style={{ marginBottom: '2px' }}>
-                    An error occurred while shortening the URL!
-                  </span>
-                </Alert>
-                <Alert variant="success" show={created}>
-                  This is your shortened link:
-                  <Alert.Link target="_blank" href={`https://tidis.net/${result}`}>
-                    {`https://tidis.net/${result}`}
-                  </Alert.Link>
-                  .
-                  The link was copied to your clipboard!
-                </Alert>
-              </Container>
+              <div className="columns is-variable is-1-mobile is-1">
+                <div className="column is-10">
+                  <input
+                    type="url"
+                    name="url"
+                    id="url"
+                    value={url}
+                    onChange={this.setURL}
+                    className={styles.url}
+                    placeholder="Paste your long URL here!"
+                    required
+                    disabled={loading}
+                    aria-placeholder="Paste your long URL here!"
+                  />
+                </div>
+                <div className="column">
+                  <input
+                    type="submit"
+                    value={(loading) ? 'Loading...' : 'Shorten!'}
+                    disabled={loading}
+                    className={styles.Shorten}
+                    aria-label="Shorten!"
+                  />
+
+                </div>
+              </div>
+
+              <Alert variant="danger" show={invalidURL}>
+                <i className="mdi mdi-close" style={{ paddingRight: '5px' }} />
+                <span style={{ marginBottom: '2px' }}>
+                  <b>{url}</b>
+                  {' '}
+                  is not a valid URL!
+                </span>
+              </Alert>
+              <Alert variant="danger" show={requestError}>
+                <i className="mdi mdi-close" style={{ paddingRight: '5px' }} />
+                <span style={{ marginBottom: '2px' }}>
+                  An error occurred while shortening the URL!
+                </span>
+              </Alert>
+              <Alert variant="success" show={created}>
+                This is your shortened link:
+                <Alert.Link target="_blank" href={`https://tidis.net/${result}`}>
+                  {`https://tidis.net/${result}`}
+                </Alert.Link>
+                .
+                The link was copied to your clipboard!
+              </Alert>
             </form>
           </div>
         </section>
