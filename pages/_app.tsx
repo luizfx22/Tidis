@@ -1,4 +1,5 @@
 import '../styles/globals.css';
+import 'bulma';
 
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />;
