@@ -1,5 +1,5 @@
 // Code components
-import { FormEvent, Component, ReactDOM } from 'react';
+import { FormEvent, Component } from 'react';
 import Head from 'next/head';
 import Axios from 'axios';
 import * as yup from 'yup';
@@ -217,6 +217,17 @@ export default class Index extends Component<{}, IState> {
           <meta property="og:url" content="https://tidis.net/" />
           <meta property="og:title" content="Tidis: An open source and privacy first url shortener." />
           <meta property="og:description" content="With Tidis you can shorten your links without tracking, ads or anything harmful for your privacy." />
+
+          {/* Favicon */}
+          <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+          <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+          <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+          <link rel="android-chrome" type="image/png" sizes="192x192" href="/android-chrome-192x192.png" />
+          <link rel="android-chrome" type="image/png" sizes="512x512" href="/android-chrome-512x512.png" />
+          <link rel="manifest" href="/site.webmanifest" />
+          <meta name="msapplication-TileColor" content="#485563" />
+          <meta name="theme-color" content="#485563" />
+
           {/* <meta property="og:image" content="https://metatags.io/assets/meta-tags-16a33a6a8531e519cc0936fbba0ad904e52d35f34a46c97a2c9f6f7dd7d336f2.png" /> */}
 
           <meta property="twitter:card" content="summary_large_image" />
@@ -227,9 +238,12 @@ export default class Index extends Component<{}, IState> {
           <title>Tidis: An open source and privacy first url shortener.</title>
         </Head>
         <section className={styles.container}>
-          <h1 id={styles.logo}>
+          {/* <h1 id={styles.logo}>
             TIDIS
-          </h1>
+          </h1> */}
+
+          <img src="/logo.png" alt="Tidis.net logo" className={styles['img-logo']} />
+
           <p className={styles.slogan}>An open source and privacy first url shortener.</p>
           <div className="container" style={{ marginTop: '7%' }}>
             <form onSubmit={this.handleShortening} method="post">
@@ -261,7 +275,6 @@ export default class Index extends Component<{}, IState> {
               </div>
 
               <Alert variant="danger" show={invalidURL}>
-                <i className="mdi mdi-close" style={{ paddingRight: '5px' }} />
                 <span style={{ marginBottom: '2px' }}>
                   <b>{url}</b>
                   {' '}
@@ -269,7 +282,6 @@ export default class Index extends Component<{}, IState> {
                 </span>
               </Alert>
               <Alert variant="danger" show={requestError}>
-                <i className="mdi mdi-close" style={{ paddingRight: '5px' }} />
                 <span style={{ marginBottom: '2px' }}>
                   An error occurred while shortening the URL!
                 </span>
