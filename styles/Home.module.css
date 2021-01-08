@@ -28,6 +28,10 @@ h1#logo {
   text-align: center;
 }
 
+img.img-logo {
+  width: 20%;
+}
+
 p.slogan {
   margin-top: 0;
   text-align: center;
