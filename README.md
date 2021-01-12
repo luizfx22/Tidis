@@ -6,3 +6,17 @@ The answer is, no! Tidis is an url shortener focused in privacy, without trackin
 
 ### This project is made of what?
 This project is built using Vercel's NextJS template, ExpressJS and MongoDB for database, all of this written in TypeScript. On the other hand, the front-end uses React (which is included in NextJS template).
+
+### Development
+To develop this project you must have NodeJS v14.15.4+ installed!
+
+1. Install Yarn
+```sh
+$ npm i -g yarn
+```
+2. Clone this repository by downloading via browser (you must extract the zip contents into a separated directory) or via git clone
+3. Open a terminal in the directory
+4. Run development server
+```sh
+$ yarn dev
+```
