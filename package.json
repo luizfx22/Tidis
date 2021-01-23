@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "emulate": "cd lib/emulators && firebase emulators:start --only firestore"
   },
   "dependencies": {
     "@mdi/font": "^5.8.55",
@@ -18,12 +19,12 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.3",
     "express-slow-down": "^1.4.0",
+    "firebase": "^8.2.4",
+    "firebase-admin": "^9.4.2",
     "helmet": "^4.2.0",
     "mongoose": "^5.11.8",
     "nanoid": "^3.1.20",
-    "next": "10.0.0",
-    "node-sass": "^4.0.0",
-    "nodemon": "^2.0.6",
+    "next": "^10.0.5",
     "react": "17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "17.0.1",
@@ -57,6 +58,7 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-react": "7.21.5",
     "eslint-plugin-react-hooks": "4.0.0",
+    "node-sass": "^4.14.1",
     "prettier": "^2.2.1"
   }
 }

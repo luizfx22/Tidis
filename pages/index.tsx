@@ -19,11 +19,16 @@ interface IURLForm {
   url: string;
 }
 
+interface IURLErrors {
+  url: string;
+}
+
 interface IState {
   form: IURLForm,
   result: string,
   invalidURL: boolean,
   requestError: boolean,
+  errorMessages: IURLErrors,
   loading: boolean,
   created: boolean,
 }
@@ -38,6 +43,10 @@ export default class Index extends Component<{}, IState> {
       },
 
       result: '',
+
+      errorMessages: {
+        url: '',
+      },
 
       invalidURL: false,
       requestError: false,
@@ -108,10 +117,10 @@ export default class Index extends Component<{}, IState> {
     });
   }
 
-  showInvalidURLAlert(callback: Function = undefined) {
+  showInvalidURLAlert(message: string, callback: Function = undefined) {
     this.setState({ invalidURL: true }, () => {
       window.setTimeout(() => {
-        this.setState({ invalidURL: false });
+        this.setState({ invalidURL: false, errorMessages: { url: message } });
 
         // Executes callback
         if (callback) {
@@ -164,7 +173,7 @@ export default class Index extends Component<{}, IState> {
     try {
       await schema.validate({ url });
     } catch (error) {
-      this.showInvalidURLAlert(() => {
+      this.showInvalidURLAlert('', () => {
         this.setLoading(false);
       });
 
@@ -178,7 +187,7 @@ export default class Index extends Component<{}, IState> {
         },
       });
 
-      this.setState({ result: data.a_alias });
+      this.setState({ result: data.a_slug });
 
       this.copyToClipboard();
       this.showCreatedAlert();
@@ -189,7 +198,7 @@ export default class Index extends Component<{}, IState> {
 
       //
     } catch (error) {
-      this.showInvalidURLAlert(() => {
+      this.showInvalidURLAlert(error.message, () => {
         this.setLoading(false);
       });
 
@@ -203,6 +212,7 @@ export default class Index extends Component<{}, IState> {
       result,
       invalidURL,
       requestError,
+      errorMessages,
       loading,
       created,
     } = this.state;
@@ -284,6 +294,8 @@ export default class Index extends Component<{}, IState> {
               <Alert variant="danger" show={requestError}>
                 <span style={{ marginBottom: '2px' }}>
                   An error occurred while shortening the URL!
+                  {' '}
+                  {errorMessages.url || ''}
                 </span>
               </Alert>
               <Alert variant="success" show={created}>
