@@ -1,5 +1,3 @@
-const path = require("path");
-
 module.exports = {
   async rewrites() {
     return [
@@ -8,8 +6,5 @@ module.exports = {
         destination: "/api/resolver/:path",
       },
     ];
-  },
-  sassOptions: {
-    includePaths: [path.join(__dirname, 'styles')],
   },
 };

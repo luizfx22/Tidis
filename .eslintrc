@@ -29,8 +29,6 @@
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/ban-types": "off",
     "@typescript-eslint/parser": "off",
-    "linebreak-style": "off",
-    "react/jsx-props-no-spreading": "off",
-    "react/prop-types": "off"
+    "linebreak-style": "off"
   }
 }
