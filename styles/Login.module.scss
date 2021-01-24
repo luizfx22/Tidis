@@ -1,0 +1,114 @@
+section.login_container {
+  @apply container;
+  @apply m-auto;
+  @apply min-h-screen;
+  @apply pt-20;
+  
+  & > div {
+    @apply w-full;
+    @apply p-20;
+    @apply mx-auto;
+    @apply rounded-md;
+    @apply shadow-md;
+    @apply border;
+    @apply border-gray-100;
+    @apply flex;
+    @apply flex-col;
+    @apply space-y-8;
+    
+    background-color: white;
+
+    .login_text {
+      font-family: "Roboto", sans-serif;
+      font-size: 2.1rem;
+      @apply font-normal;
+      @apply mb-6;
+    }
+
+    .login_divider {
+      @apply border-b;
+      @apply border-gray-100;
+    }
+
+    form {
+        @apply space-y-6;
+        @apply flex;
+        @apply flex-col;
+        @apply items-center;
+
+        label {
+          @apply w-full;
+
+          & > span {
+            @apply flex;
+            @apply flex-row;
+            @apply items-center;
+            @apply justify-between;
+          }
+
+          p {
+            @apply mb-2;
+            font-weight: 500;
+          }
+        }
+
+        button.login_btn {
+          @apply m-auto;
+          @apply border;
+          @apply rounded-sm;
+          @apply w-full;
+          @apply py-3;
+
+          font-weight: 500;
+
+          color: white;
+
+          background: #2193b0;
+          background: -webkit-linear-gradient(to top, #2193b0, #6dd5ed);
+          background: linear-gradient(to top, #2193b0, #6dd5ed);
+        }
+
+        input {
+          @apply w-full;
+          @apply border;
+          @apply border-gray-200;
+          @apply rounded-md;
+          @apply p-3;
+          @apply transition;
+          @apply duration-300;
+          @apply ease-in-out;
+
+          &:focus {
+            @apply ring;
+            @apply ring-blue-400;
+            @apply ring-opacity-40;
+            @apply border-blue-200;
+          }
+        }
+    } 
+
+    button.g_login {
+      @apply flex;
+      @apply flex-row;
+      @apply items-center;
+      @apply space-x-3;
+      @apply bg-gray-50;
+      @apply py-2;
+      @apply px-3;
+      @apply rounded-sm;
+      @apply shadow-md;
+      @apply self-center;
+      @apply border;
+      @apply border-gray-200;
+      
+      p {
+        font-family: "Roboto", sans-serif;
+        font-weight: 500;
+      }
+
+      &:hover {
+        @apply bg-gray-200
+      }
+    }
+  }
+} 

@@ -1,0 +1,41 @@
+.wrap {
+    @apply flex;
+    @apply justify-center;
+    @apply items-center;
+    @apply z-50;
+    @apply fixed;
+    @apply top-0;
+    @apply left-0;
+    @apply right-0;
+    @apply bottom-0;
+    @apply bg-gray-300;
+
+    & > .circle_wrap {
+        @apply transform-gpu;
+        @apply -translate-y-10;
+
+        & .background_circle {
+            @apply w-10;
+            @apply h-10;
+            @apply border-2;
+            @apply border-gray-500;
+            @apply rounded-full;
+            @apply transform-gpu;
+            @apply -translate-x-5;
+            @apply -translate-y-5;
+            @apply absolute;
+        }
+
+        & .foreground_circle {
+            @apply w-10;
+            @apply h-10;
+            @apply border-t-4;
+            @apply border-blue-500;
+            @apply rounded-full;
+            @apply transform-gpu;
+            @apply -translate-x-5;
+            @apply -translate-y-5;
+            @apply absolute;
+        }
+    }
+}

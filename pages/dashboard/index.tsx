@@ -7,7 +7,7 @@ const Dashboard = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user || user.pending) {
+    if (!user) {
       router.replace('/login');
     }
   }, [user, router]);

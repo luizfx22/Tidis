@@ -12,9 +12,5 @@ export default async (req:NextApiRequest, res: NextApiResponse) => {
   const record = await fireadmin.auth().getUser(uid);
 
   res.setHeader('Set-Cookie', `sid=${cookie}; HttpOnly; Max-Age=${1000 * 60 * 60 * 24}; Path=/`);
-  res.json({
-    user: record.displayName,
-    email: record.email,
-    picture: record.photoURL,
-  });
+  res.status(201).end();
 };

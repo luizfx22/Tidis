@@ -3,9 +3,9 @@ import fireadmin from '../../lib/firebase/admin';
 import fireclient from '../../lib/firebase/client';
 
 export default async (req:NextApiRequest, res: NextApiResponse) => {
-  const { login, password } = req.body;
+  const { email, password } = req.body;
 
-  const { user } = await fireclient.auth().createUserWithEmailAndPassword(login, password);
+  const { user } = await fireclient.auth().createUserWithEmailAndPassword(email, password);
   fireclient.auth().signOut();
 
   const idToken = await user.getIdToken();
@@ -15,7 +15,7 @@ export default async (req:NextApiRequest, res: NextApiResponse) => {
 
   res.setHeader(
     'Set-Cookie',
-    `sid=${session}; HttpOnly; Max-Age=${1000 * 60 * 60 * 24}; Path=/`,
+    `sid=${session}; HttpOnly; Max-Age=${1000 * 60 * 60 * 24}; Path=/; SameSite=Strict`,
   );
   res.json({
     user: user.displayName,

@@ -6,14 +6,20 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(405).end();
   }
 
-  const { sid } = req.body;
+  const { sid } = req.cookies;
 
-  const { uid } = await fireadmin.auth().verifySessionCookie(sid);
-  const record = await fireadmin.auth().getUser(uid);
+  try {
+    const { uid } = await fireadmin.auth().verifySessionCookie(sid);
+    const record = await fireadmin.auth().getUser(uid);
 
-  res.json({
-    user: record.displayName,
-    email: record.email,
-    picture: record.photoURL,
-  });
+    res.json({
+      user: record.displayName,
+      email: record.email,
+      picture: record.photoURL,
+    });
+  } catch (error) {
+    res.status(401).end();
+  }
+
+  return true;
 };
