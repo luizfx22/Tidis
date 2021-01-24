@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "emulate": "cd lib/emulators && firebase emulators:start --only firestore"
+    "emulate": "cd lib/emulator && firebase emulators:start --only firestore"
   },
   "dependencies": {
     "@mdi/font": "^5.8.55",

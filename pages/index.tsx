@@ -5,9 +5,8 @@ import Axios from 'axios';
 import * as yup from 'yup';
 
 // External HTML components
-import {
-  Alert,
-} from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
+import { useUser } from '../lib/context/auth-context';
 
 // Styles
 import styles from '../styles/Home.module.css';
