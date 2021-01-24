@@ -21,8 +21,6 @@ const Login = () => {
 
       setUser(userData);
 
-      // console.log(data);
-
       //
     } catch ({ code }) {
       // console.log(code);
@@ -34,6 +32,7 @@ const Login = () => {
   }, [handleGoogleRedirect]);
 
   useEffect(() => {
+    console.log(user);
     if (user && !user.pending) {
       router.replace('/dashboard');
     }
