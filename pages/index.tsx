@@ -3,23 +3,22 @@ import { FormEvent, Component } from 'react';
 import Head from 'next/head';
 import Axios from 'axios';
 import * as yup from 'yup';
+import slugify from 'slugify';
 
 // External HTML components
-import { Alert } from 'react-bootstrap';
-import { useUser } from '../lib/context/auth-context';
+import {
+  Alert,
+} from 'react-bootstrap';
 
 // Styles
-import styles from '../styles/Home.module.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@mdi/font/css/materialdesignicons.css';
+import styles from '../styles/Home.module.css';
 
 // Types
 interface IURLForm {
-  url: string;
-}
-
-interface IURLErrors {
-  url: string;
+  url?: string;
+  slug?: string;
 }
 
 interface IState {
@@ -27,7 +26,6 @@ interface IState {
   result: string,
   invalidURL: boolean,
   requestError: boolean,
-  errorMessages: IURLErrors,
   loading: boolean,
   created: boolean,
 }
@@ -39,13 +37,10 @@ export default class Index extends Component<{}, IState> {
     this.state = {
       form: {
         url: '',
+        slug: '',
       },
 
       result: '',
-
-      errorMessages: {
-        url: '',
-      },
 
       invalidURL: false,
       requestError: false,
@@ -55,6 +50,7 @@ export default class Index extends Component<{}, IState> {
 
     this.handleShortening = this.handleShortening.bind(this);
     this.setURL = this.setURL.bind(this);
+    this.setSlug = this.setSlug.bind(this);
     this.setResult = this.setResult.bind(this);
     this.setCreated = this.setCreated.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
@@ -62,6 +58,18 @@ export default class Index extends Component<{}, IState> {
 
   setURL(e) {
     this.setState({ form: { url: e.target.value } });
+  }
+
+  setSlug(e) {
+    this.setState({
+      form: {
+        slug: slugify(e.target.value, {
+          replacement: '-',
+          lower: true,
+          strict: false,
+        }),
+      },
+    });
   }
 
   setResult(e) {
@@ -116,10 +124,10 @@ export default class Index extends Component<{}, IState> {
     });
   }
 
-  showInvalidURLAlert(message: string, callback: Function = undefined) {
+  showInvalidURLAlert(callback: Function = undefined) {
     this.setState({ invalidURL: true }, () => {
       window.setTimeout(() => {
-        this.setState({ invalidURL: false, errorMessages: { url: message } });
+        this.setState({ invalidURL: false });
 
         // Executes callback
         if (callback) {
@@ -163,16 +171,17 @@ export default class Index extends Component<{}, IState> {
     this.setLoading(true);
 
     const { form } = this.state;
-    const { url } = form;
+    const { url, slug } = form;
 
     const schema = yup.object().shape({
       url: yup.string().trim().url().required(),
+      slug: yup.string().trim().lowercase(),
     });
 
     try {
-      await schema.validate({ url });
+      await schema.validate({ url, slug });
     } catch (error) {
-      this.showInvalidURLAlert('', () => {
+      this.showInvalidURLAlert(() => {
         this.setLoading(false);
       });
 
@@ -180,13 +189,13 @@ export default class Index extends Component<{}, IState> {
     }
 
     try {
-      const { data } = await Axios.post('/api/shorten', { url }, {
+      const { data } = await Axios.post('/api/shorten', { url, slug }, {
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      this.setState({ result: data.a_slug });
+      this.setState({ result: data.a_alias });
 
       this.copyToClipboard();
       this.showCreatedAlert();
@@ -197,7 +206,7 @@ export default class Index extends Component<{}, IState> {
 
       //
     } catch (error) {
-      this.showInvalidURLAlert(error.message, () => {
+      this.showInvalidURLAlert(() => {
         this.setLoading(false);
       });
 
@@ -207,11 +216,10 @@ export default class Index extends Component<{}, IState> {
 
   render() {
     const {
-      form: { url },
+      form: { url, slug },
       result,
       invalidURL,
       requestError,
-      errorMessages,
       loading,
       created,
     } = this.state;
@@ -270,6 +278,18 @@ export default class Index extends Component<{}, IState> {
                     disabled={loading}
                     aria-placeholder="Paste your long URL here!"
                   />
+                  <input
+                    type="text"
+                    name="slug"
+                    id="slug"
+                    value={slug}
+                    onChange={this.setSlug}
+                    className={styles.url}
+                    placeholder="Type your custom slug here!"
+                    required
+                    disabled={loading}
+                    aria-placeholder="Type your custom slug here!"
+                  />
                 </div>
                 <div className="column">
                   <input
@@ -293,8 +313,6 @@ export default class Index extends Component<{}, IState> {
               <Alert variant="danger" show={requestError}>
                 <span style={{ marginBottom: '2px' }}>
                   An error occurred while shortening the URL!
-                  {' '}
-                  {errorMessages.url || ''}
                 </span>
               </Alert>
               <Alert variant="success" show={created}>

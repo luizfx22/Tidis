@@ -7,57 +7,43 @@ import express from 'express';
 import expressRateLimit from 'express-rate-limit';
 import expressSlowDown from 'express-slow-down';
 import helmet from 'helmet';
-import { auth } from 'firebase-admin';
-import fireadmin from '../../lib/firebase/admin';
-import { Collections } from '../../lib/firebase';
+
+// My stuff
+import URLSModel from './db/urls-model';
+import Connection from './db/db';
 
 const app = express();
 
 app.use(helmet());
 
+// Connect
+Connection();
+
 function getNewAlias(): string {
   return nanoid(8);
 }
 
-async function checkUserValid(sid: string): Promise<string> {
-  try {
-    return (await fireadmin.auth().verifySessionCookie(sid, true)).uid;
-  } catch (e) {
-    return null;
-  }
-}
-
 const schema = yup.object().shape({
   url: yup.string().trim().url().required(),
-  slug: yup.string().trim(),
+  slug: yup.string().trim().lowercase(),
 });
 
 app.use(expressSlowDown({
-  windowMs: 50 * 1000,
-  delayAfter: 5,
-  delayMs: 750,
+  windowMs: 30 * 1000,
+  delayAfter: 1,
+  delayMs: 500,
 }));
 
 app.use(expressRateLimit({
-  windowMs: 50 * 1000,
-  max: 5,
+  windowMs: 30 * 1000,
+  max: 1,
 }));
 
 app.post('/api/shorten', async (req, res) => {
-  const { url } = req.body;
-  let { slug } = req.body;
-  const { sid } = req.cookies;
-
-  slug = slug || getNewAlias();
-
-  const uid = await checkUserValid(sid);
-
-  if (!sid || !uid) {
-    slug = getNewAlias();
-  }
+  const { url, slug } = req.body;
 
   // Validate the URL
-  const valid = await schema.validate({ url, slug });
+  const valid = await schema.validate({ url });
   if (!valid) {
     res.status(400).json({ error: 'There is no URL to shorten!' });
     return false;
@@ -71,33 +57,50 @@ app.post('/api/shorten', async (req, res) => {
   }
 
   // Find an existing slug
-  const snap = await fireadmin
-    .firestore()
-    .collection(Collections.SLUGS)
-    .where('a_slug', '==', slug)
-    .get();
+  const result = await URLSModel.findOne({
+    a_alias: slug,
+  }).select('a_alias').exec();
 
-  if (!snap.empty) {
-    res
-      .status(403)
-      .json({ error: 'Cannot shorten this URL! Slug is already in use!' });
+  if (result && result?.a_alias) {
+    res.status(409).json({
+      error: 'Slug already in use!',
+    });
     return false;
   }
 
-  await fireadmin.firestore().collection(Collections.SLUGS).add({
-    a_url: valid.url,
-    a_slug: valid.slug,
-    a_hits: 0,
-    a_uid: uid,
-  });
+  // Start register the URL
+  const body = {
+    a_url: '',
+    a_alias: '',
+  };
 
-  res.status(201).json({
-    a_url: valid.url,
-    a_slug: valid.slug,
-    a_hits: 0,
-  });
+  try {
+    body.a_url = url;
+    body.a_alias = slug || getNewAlias();
 
-  return true;
+    const URLS = new URLSModel(body);
+
+    URLS.save((err, inst) => {
+      if (err) throw new Error(err.message);
+      const ret = { ...inst._doc };
+
+      delete ret._id;
+      delete ret.__v;
+      delete ret.a_createdAt;
+
+      ret.success = true;
+
+      res.status(201).json(ret);
+      return true;
+    });
+
+    return true;
+
+    //
+  } catch (error) {
+    res.status(500).json(error);
+    return false;
+  }
 });
 
 export default app;

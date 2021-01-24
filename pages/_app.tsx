@@ -1,14 +1,8 @@
-import { AppProps } from 'next/app';
-import { AuthProvier } from '../lib/context/auth-context';
 import 'bulma';
 import '../styles/globals.css';
 
-function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <AuthProvier>
-      <Component {...pageProps} />
-    </AuthProvier>
-  );
+function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />;
 }
 
 export default MyApp;
