@@ -3,7 +3,6 @@ import { FormEvent, Component } from 'react';
 import Head from 'next/head';
 import Axios from 'axios';
 import * as yup from 'yup';
-import slugify from 'slugify';
 
 // External HTML components
 import {
@@ -17,8 +16,7 @@ import styles from '../styles/Home.module.css';
 
 // Types
 interface IURLForm {
-  url?: string;
-  slug?: string;
+  url: string;
 }
 
 interface IState {
@@ -37,7 +35,6 @@ export default class Index extends Component<{}, IState> {
     this.state = {
       form: {
         url: '',
-        slug: '',
       },
 
       result: '',
@@ -50,26 +47,12 @@ export default class Index extends Component<{}, IState> {
 
     this.handleShortening = this.handleShortening.bind(this);
     this.setURL = this.setURL.bind(this);
-    this.setSlug = this.setSlug.bind(this);
-    this.setResult = this.setResult.bind(this);
     this.setCreated = this.setCreated.bind(this);
     this.copyToClipboard = this.copyToClipboard.bind(this);
   }
 
   setURL(e) {
     this.setState({ form: { url: e.target.value } });
-  }
-
-  setSlug(e) {
-    this.setState({
-      form: {
-        slug: slugify(e.target.value, {
-          replacement: '-',
-          lower: true,
-          strict: false,
-        }),
-      },
-    });
   }
 
   setResult(e) {
@@ -171,15 +154,14 @@ export default class Index extends Component<{}, IState> {
     this.setLoading(true);
 
     const { form } = this.state;
-    const { url, slug } = form;
+    const { url } = form;
 
     const schema = yup.object().shape({
       url: yup.string().trim().url().required(),
-      slug: yup.string().trim().lowercase(),
     });
 
     try {
-      await schema.validate({ url, slug });
+      await schema.validate({ url });
     } catch (error) {
       this.showInvalidURLAlert(() => {
         this.setLoading(false);
@@ -189,7 +171,7 @@ export default class Index extends Component<{}, IState> {
     }
 
     try {
-      const { data } = await Axios.post('/api/shorten', { url, slug }, {
+      const { data } = await Axios.post('/api/shorten', { url }, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -216,7 +198,7 @@ export default class Index extends Component<{}, IState> {
 
   render() {
     const {
-      form: { url, slug },
+      form: { url },
       result,
       invalidURL,
       requestError,
@@ -277,18 +259,6 @@ export default class Index extends Component<{}, IState> {
                     required
                     disabled={loading}
                     aria-placeholder="Paste your long URL here!"
-                  />
-                  <input
-                    type="text"
-                    name="slug"
-                    id="slug"
-                    value={slug}
-                    onChange={this.setSlug}
-                    className={styles.url}
-                    placeholder="Type your custom slug here!"
-                    required
-                    disabled={loading}
-                    aria-placeholder="Type your custom slug here!"
                   />
                 </div>
                 <div className="column">
