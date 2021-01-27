@@ -29,14 +29,14 @@ const schema = yup.object().shape({
 });
 
 app.use(expressSlowDown({
-  windowMs: 30 * 1000,
-  delayAfter: 1,
+  windowMs: 35 * 1000,
+  delayAfter: 15,
   delayMs: 500,
 }));
 
 app.use(expressRateLimit({
-  windowMs: 30 * 1000,
-  max: 1,
+  windowMs: 35 * 1000,
+  max: 15,
 }));
 
 app.post('/api/shorten', async (req, res) => {
