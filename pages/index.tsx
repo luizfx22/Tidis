@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Header from '../component/header/header';
 import { useUser } from '../lib/context/auth-context';
 
 // Styles
@@ -11,7 +12,9 @@ const Index = () => {
 
   return (
     <main>
-      <header className={homeStyles.site_header}>
+      <Header />
+
+      {/* <header className={homeStyles.site_header}>
         <h1 className={homeStyles.logo_text}>
           TIDIS
         </h1>
@@ -30,7 +33,7 @@ const Index = () => {
             </span>
           </Link>
         </div>
-      </header>
+      </header> */}
       <main className={homeStyles.site_index} />
     </main>
   );

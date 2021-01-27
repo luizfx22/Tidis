@@ -1,0 +1,91 @@
+.spacer,.header {
+  @apply h-20;
+}
+
+.header {
+  @apply top-0;
+  @apply fixed;
+  @apply flex;
+  @apply items-center;
+  @apply left-0;
+  @apply right-0;
+  @apply z-40;
+  @apply bg-gray-800;
+
+  backdrop-filter: blur(10px);
+
+  & > nav {
+    @apply container;
+    @apply m-auto;
+    @apply flex;
+    @apply items-center;
+    @apply justify-between;
+
+    figure.logo > img {
+      @apply w-12;
+      @apply h-12;
+    }
+
+    & > ul {
+      @apply flex;
+      @apply items-center;
+      @apply space-x-10;
+
+      li {
+        @apply text-gray-200;
+        @apply font-medium;
+        @apply cursor-pointer;
+      }
+
+      div.profile {
+        @apply h-10;
+        @apply w-10;
+        @apply rounded-full;
+        @apply flex;
+        @apply items-center;
+        @apply justify-center;
+
+        background: #2193b0;
+        background: linear-gradient(to top, #2193b0, #6dd5ed);
+      }
+
+      .login {
+        @apply px-6;
+        @apply py-2;
+        @apply rounded-full;
+        @apply flex;
+        @apply space-x-1;
+        @apply items-center;
+        @apply cursor-pointer;
+        @apply text-gray-200;
+
+        background: #2193b0;
+        background: linear-gradient(to top, #2193b0, #6dd5ed);
+
+        & > p {
+          @apply transform-gpu;
+          @apply translate-x-3;
+          @apply transition;
+        }
+
+        & > svg {
+          @apply h-4;
+          @apply w-4;
+          @apply transform-gpu;
+          @apply transition;
+          --tw-translate-y: 0.125rem;
+
+          @apply scale-0;
+        }
+
+        &:hover > svg {
+          @apply scale-100;
+        }
+
+        &:hover > p {
+          @apply translate-x-0;
+        }
+      }
+    }
+  }
+}
