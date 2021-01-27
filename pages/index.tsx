@@ -188,7 +188,7 @@ export default class Index extends Component<{}, IState> {
 
       //
     } catch (error) {
-      this.showInvalidURLAlert(() => {
+      this.showRequestErrorAlert(() => {
         this.setLoading(false);
       });
 
