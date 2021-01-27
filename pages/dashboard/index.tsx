@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useUser } from '../../lib/context/auth-context';
+import Shortener from '../../component/shortening/shortener';
 
 const Dashboard = () => {
   const [user, setUser] = useUser();
@@ -13,8 +14,9 @@ const Dashboard = () => {
   }, [user, router]);
 
   return (
-    <div>
-      {
+    <div className="container m-auto min-h-screen pt-20">
+      <Shortener />
+      {/* {
         user?.picture
           ? (
             <div className="image is-96x96">
@@ -33,7 +35,7 @@ const Dashboard = () => {
               </svg>
             </div>
           )
-      }
+      } */}
     </div>
   );
 };

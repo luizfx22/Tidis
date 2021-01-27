@@ -1,0 +1,66 @@
+.shortening_container {
+  @apply w-full;
+  @apply p-14;
+  @apply mx-auto;
+  @apply rounded-lg;
+  @apply shadow-md;
+  @apply flex;
+  @apply flex-col;
+  @apply space-y-8;
+
+  background-image: url("https://images.pexels.com/photos/2874066/pexels-photo-2874066.jpeg?cs=srgb&dl=pexels-kelly-lacy-2874066.jpg&fm=jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position-y: center;
+  background-position: center;
+
+  form.shortening_form {
+    div.shortening_form_contents {
+      label[for="url"] {
+        color: white;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      input.url {
+        width: 100%;
+        height: 60px;
+        background: #fff;
+        border: 1px solid #d3d4d7;
+        border-radius: 8px 8px 8px 8px;
+        display: inline-block;
+        margin-right: 20px;
+        margin-bottom: 0;
+        font-size: 20px;
+        color: #36383b;
+        padding: 0 20px;
+      }
+
+      label[for="slug"] {
+        color: white;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      
+      button[type=submit].Shorten {
+        margin-top: 24px;
+        width: 100%;
+        height: 60px;
+        border-radius: 8px;
+        /* border: 1px solid #d3d4d7; */
+        border: none;
+        color: #333333;
+        /* background: #0f0c29; */
+        /* background: -webkit-linear-gradient(to right, #24243e, #302b63, #0f0c29); */
+        /* background: linear-gradient(to right, #24243e, #302b63, #0f0c29); */
+      
+        background: #FFEFBA;
+        background: -webkit-linear-gradient(to right, #FFFFFF, #FFEFBA);
+        background: linear-gradient(to right, #FFFFFF, #FFEFBA);
+      
+        font-weight: bold;
+        font-size: 1.25rem;
+      }
+    }
+  }
+}
