@@ -11,7 +11,7 @@ const LoadingWrap = ({ children }) => {
 
   return (
     <>
-      <FullscrenLoading visible={user?.pending || user?.await_google} />
+      <FullscrenLoading visible={user?.pending} />
       {children}
     </>
   );
