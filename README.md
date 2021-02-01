@@ -1,8 +1,14 @@
 <h1 align="center">Tidis.net</h1>
-
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/iLuiizUHD/Tidis.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/iLuiizUHD/Tidis/alerts/)
-
 <p align="center">A tidy way to shorten your links.</p>
+
+---
+
+<p align="center">
+  <a href="https://lgtm.com/projects/g/iLuiizUHD/Tidis/alerts/"><img alt="Total alerts" src="https://img.shields.io/lgtm/alerts/g/iLuiizUHD/Tidis.svg?logo=lgtm&logoWidth=18"/></a>
+  <a href="https://lgtm.com/projects/g/iLuiizUHD/Tidis/context:javascript"><img alt="Language grade: JavaScript" src="https://img.shields.io/lgtm/grade/javascript/g/iLuiizUHD/Tidis.svg?logo=lgtm&logoWidth=18"/></a>
+</p>
+
+---
 
 ### What is Tidis? ~That company in Watch Dogs?~
 The answer is, no! Tidis is an url shortener focused in privacy, without tracking, ads or any other type of harmful stuff for your privacy keeping you links shortened in a tidy way, that's why the name.
