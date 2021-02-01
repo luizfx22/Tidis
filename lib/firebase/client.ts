@@ -7,7 +7,7 @@ const dev = process.env.NODE_ENV !== 'production';
 if (firebase.apps.length < 1) {
   firebase.initializeApp({
     apiKey: 'AIzaSyBXAlSzIbljNjQeY_2S1KF57L7nsDU3odQ',
-    authDomain: 'tidis-75bc9.firebaseapp.com',
+    authDomain: 'auth.tidis.net',
     projectId: 'tidis-75bc9',
     storageBucket: 'tidis-75bc9.appspot.com',
     messagingSenderId: '269032770605',
