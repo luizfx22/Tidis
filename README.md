@@ -1,4 +1,7 @@
 <h1 align="center">Tidis.net</h1>
+
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/iLuiizUHD/Tidis.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/iLuiizUHD/Tidis/alerts/)
+
 <p align="center">A tidy way to shorten your links.</p>
 
 ### What is Tidis? ~That company in Watch Dogs?~
